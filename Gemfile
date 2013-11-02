@@ -15,9 +15,8 @@ gem 'paperclip'
 gem 'twitter-bootstrap-rails'
 gem 'aws-sdk'
 
-group :development do
-  gem 'thin'
-end
+gem 'thin'
+
 group :development, :test do
 	gem 'sqlite3'
 end
