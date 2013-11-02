@@ -1,0 +1,29 @@
+<%= page_header do %>
+  <% if signed_in? %>
+    <%= link_to 'Add an Image', new_image_path, class: 'btn pull-right' %>
+  <% end %>
+  <h3> Kind of a Waterfall... </h3>
+<% end %>
+
+<ul class="thumbnails">
+<% @images.each do |image| %>
+  <li>
+    <div class="thumbnail">
+    <%= link_to image_tag(image.asset.url(:small)), image_path(image) %><br />
+      <div class="caption">
+        <% if image.caption? %><%= image.caption %><br /><% end %>
+        
+        <%= link_to 'View full size', image_path(image) %>
+
+        <% if can_delete_image?(image) %>
+          | <%= link_to "Delete", image_path(image), method: :delete, data: { confirm: "Are you sure?" } %>
+        <% end %>
+
+      </div>
+    </div>
+  </li>  
+<% end %>
+</ul>
+
+
+

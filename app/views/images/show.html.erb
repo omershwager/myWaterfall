@@ -1,0 +1,14 @@
+
+<%= page_header do %>
+  <h1>Viewing Image</h1>
+  <%= link_to 'All Images', images_path %>
+<% end %>
+
+<%= image_tag(@image.asset.url(:large), alt: @image.caption, class: 'img-polaroid') %>
+
+<br />
+
+<h3><%= @image.caption %></h3>
+
+<p><%= @image.description %></p>
+

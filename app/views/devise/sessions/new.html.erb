@@ -1,0 +1,33 @@
+<br />
+<div class="row">
+	<div class="span4">
+	<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "well form-vertical well-small"}) do |f| %>
+
+		<fieldset>
+			<legend>Sign In</legend>
+			<%= f.input :email %>
+			<%= f.input :password %>
+
+	  	<% if devise_mapping.rememberable? -%>
+	    	<%= f.input :remember_me, as: :boolean, inline_label: "Remember Me", label: false %>
+	  	<% end -%>
+
+	  	<%= f.button :submit, "Sign In", class: 'btn btn-primary btn-block' %>
+		</fieldset>
+	<% end %>
+
+	</div>
+
+	<div class="span8">
+		<h2>Don't Have An Account? Sign Up!</h2>
+		<h3>Why Sign Up? Because you want to!</h3>
+		<p>
+			<%= image_tag "https://lh3.googleusercontent.com/-Iu_Qqiul2LA/RgVgboe5iOI/AAAAAAAAA_w/J-Ujn_tS87M/w769-h577-no/CIMG2333.JPG", class: 'pull-right pic' %>
+			Some text to fill this paragraph is not easy to come up with. 
+			Especially at 23:03 on Friday night...
+			So, we'll just say: sign up sign up sign up sign up sign up sign up.
+			Sign up sign up sign up sign up sign up sign up sign up sign up sign up.
+		</p>
+		<%= render "devise/shared/links" %>
+	</div>
+</div>
