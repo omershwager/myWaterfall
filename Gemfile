@@ -14,8 +14,8 @@ gem 'js-routes'
 gem 'paperclip'
 gem 'twitter-bootstrap-rails'
 gem 'aws-sdk'
-
 gem 'thin'
+gem 'fastimage'
 
 group :development, :test do
 	gem 'sqlite3'

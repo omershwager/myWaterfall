@@ -1,0 +1,75 @@
+<%= page_header do %>
+  <% if signed_in? %>
+    <%= link_to 'Add an Image', new_image_path, class: 'btn pull-right' %>
+  <% end %>
+  <h3> Waterfalllllllll </h3>
+<% end %>
+
+
+
+
+  <div id="container"></div>
+
+</div>
+
+<script type="text/x-handlebars-template" id="waterfall-tpl">
+
+{{#result}}
+    <div class="item">
+        <img src="{{image}}" width="{{width}}" height="{{height}}" />
+    </div>
+{{/result}}
+</script>
+
+<script src="scripts/handlebars.js"></script>
+<script src="scripts/waterfall.js"></script>
+
+<script>
+
+    $('#container').waterfall({
+        itemCls: 'item',
+        // colWidth: 222,
+        colWidth: 330,
+        gutterWidth: 15,
+        gutterHeight: 15,
+        maxPage: 5,
+        checkImagesLoaded: false,
+        callbacks: {
+
+            loadingFinished: function ($loading, isBeyondMaxPage) {
+                if (!isBeyondMaxPage) {
+                    $loading.fadeOut();
+                } else {
+                    $loading.hide();
+                    $('#page-navigation').show();
+                }
+            },
+            renderData: function (data, dataType) {
+                var tpl,
+                    template,
+                    resultNum = data.total;
+
+                if (resultNum < 20) {
+                    $('#container').waterfall('pause', function () {
+                        $('#waterfall-message').html('<p style="color:#666;">no more photos, you\'ve reached rock bottom...</p>')
+                        //alert('no more data');
+                    });
+                }
+
+                if (dataType === 'json' || dataType === 'jsonp') { // json or jsonp format
+                    tpl = $('#waterfall-tpl').html();
+                    template = Handlebars.compile(tpl);
+
+                    return template(data);
+                } else { // html format
+                    return data;
+                }
+            }
+        },
+        path: function (page) {
+            return 'waterfallData.json';            
+        }
+    });
+
+</script>
+

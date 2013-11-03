@@ -17,6 +17,10 @@ Waterfall::Application.routes.draw do
 
   root to: 'images#index'
 
+  get 'waterfallData', to: 'images#waterfallData'  
+  get 'mywaterfall', to: 'images#mywaterfall'  
+  # get 'waterfallData.json', to: 'images#waterfallData.json'
+
   # get '/:id', to: 'profiles#show', as: 'profile'
 
 end
