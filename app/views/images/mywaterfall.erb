@@ -23,8 +23,7 @@
 <script src="scripts/handlebars.js"></script>
 <script src="scripts/waterfall.js"></script>
 
-<script>
-
+<script>    
     $('#container').waterfall({
         itemCls: 'item',
         // colWidth: 222,
@@ -41,7 +40,7 @@
                 } else {
                     $loading.hide();
                     $('#page-navigation').show();
-                }
+                }           
             },
             renderData: function (data, dataType) {
                 var tpl,
@@ -68,7 +67,7 @@
         path: function (page) {
             return 'waterfallData.json';            
         }
-    });
+    });    
 
 </script>
 
