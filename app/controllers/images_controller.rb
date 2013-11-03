@@ -99,18 +99,18 @@ class ImagesController < ApplicationController
       hash["width"] = showedWidth
       showedHeight = showedWidth
       
-      logger.debug "image.image_width before: #{image.image_width}"
-      logger.debug "image.image_height before: #{image.image_height}"
-      if image.image_width.to_s.empty? or image.image_width == 0 or image.image_height.to_s.empty? or image.image_height == 0
+      logger.info "image.image_width before: #{image.image_width}"
+      logger.info "image.image_height before: #{image.image_height}"
+      # if image.image_width.to_s.empty? or image.image_width == 0 or image.image_height.to_s.empty? or image.image_height == 0
         updateImageDimensions(image, absoluteUrl)
-      end
-      logger.debug "image.image_width after: #{image.image_width}"
-      logger.debug "image.image_height after: #{image.image_height}"
+      # end
+      logger.info "image.image_width after: #{image.image_width}"
+      logger.info "image.image_height after: #{image.image_height}"
       if image.image_width and image.image_width != 0 and image.image_height and image.image_height != 0
         ratio = image.image_width.to_f / image.image_height
-        logger.debug "ratio: #{ratio}"
+        logger.info "ratio: #{ratio}"
         showedHeight = Integer(showedWidth.to_f / ratio)
-        logger.debug "showedHeight: #{showedHeight}"
+        logger.info "showedHeight: #{showedHeight}"
       end
       hash["height"] = showedHeight
       arr.push(hash)
@@ -152,14 +152,15 @@ class ImagesController < ApplicationController
 
   def updateImageDimensions(image,  absoluteUrl)
     begin
-      logger.debug "absoluteUrl: #{absoluteUrl}"
-      logger.debug "image: #{image}"
+      logger.info "absoluteUrl: #{absoluteUrl}"
+      logger.info "image: #{image}"
       dimentionsArr = Array.new;
       if absoluteUrl.match("localhost")
         localPath = image.asset.url("large")
-        logger.debug "localPath: #{localPath}"
+        logger.info "localPath: #{localPath}"
         dimentionsArr = FastImage.size(localPath)
       else
+        logger.info "attemptin FastImage.size from absoluteUrl: #{absoluteUrl}"
         dimentionsArr = FastImage.size(absoluteUrl)
       end
       logger.info "dimentionsArr: #{dimentionsArr}"
