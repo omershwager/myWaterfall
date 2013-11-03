@@ -58,6 +58,10 @@ class ImagesController < ApplicationController
     
     respond_to do |format|
       if @image.save
+        begin
+          updateImageDimensions(@image)
+        rescue
+        end
         format.html { redirect_to images_path, notice: 'Image was successfully created.' }
          # format.html { redirect_to images_path, notice: 'Image was successfully created.' }
         format.json { render json: images_path, status: :created, location: @image }
@@ -92,11 +96,7 @@ class ImagesController < ApplicationController
     arr = Array.new;
     @images.each do |image|
       hash = Hash.new
-      absoluteUrl = image.asset.url("large")
-      if !absoluteUrl.match("http") 
-        absoluteUrl = request.protocol + request.host_with_port + image.asset.url("large")
-      end
-      
+      absoluteUrl = getAbsoluteUrl(image)      
       hash["image"] = absoluteUrl
 
       # hash["image"] = URI.join(request.url, image.asset.url)
@@ -136,6 +136,8 @@ class ImagesController < ApplicationController
   def mywaterfall
     if !current_user
       flash.now[:notice] = 'You need to login if you want to add your own pics.'
+    else
+      flash.now[:notice] = 'to edit the gallery go to "Edit Gallery" tab'
     end 
     respond_to do |format|
       format.html # show.html.erb      
@@ -157,6 +159,11 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
   end
 
+  def updateImageDimensions(image)
+    absoluteUrl = getAbsoluteUrl(image)
+    updateImageDimensions(image,  absoluteUrl)
+  end
+
   def updateImageDimensions(image,  absoluteUrl)
     begin
       logger.info "absoluteUrl: #{absoluteUrl}"
@@ -176,6 +183,14 @@ class ImagesController < ApplicationController
       image.save    
     rescue
     end
+  end
+
+  def getAbsoluteUrl(image)
+    absoluteUrl = image.asset.url("large")
+    if !absoluteUrl.match("http") 
+      absoluteUrl = request.protocol + request.host_with_port + image.asset.url("large")
+    end
+    return absoluteUrl
   end
 
 end
