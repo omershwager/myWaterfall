@@ -92,7 +92,11 @@ class ImagesController < ApplicationController
     arr = Array.new;
     @images.each do |image|
       hash = Hash.new
-      absoluteUrl = request.protocol + request.host_with_port + image.asset.url("large")
+      absoluteUrl = image.asset.url("large")
+      if !absoluteUrl.match("http") 
+        absoluteUrl = request.protocol + request.host_with_port + image.asset.url("large")
+      end
+      
       hash["image"] = absoluteUrl
 
       # hash["image"] = URI.join(request.url, image.asset.url)
@@ -130,6 +134,9 @@ class ImagesController < ApplicationController
 
   # GET /images#waterfall
   def mywaterfall
+    if !current_user
+      flash.now[:notice] = 'You need to login if you want to add your own pics.'
+    end 
     respond_to do |format|
       format.html # show.html.erb      
     end
