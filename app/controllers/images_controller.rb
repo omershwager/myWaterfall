@@ -105,9 +105,9 @@ class ImagesController < ApplicationController
       
       logger.info "image.image_width before: #{image.image_width}"
       logger.info "image.image_height before: #{image.image_height}"
-      # if image.image_width.to_s.empty? or image.image_width == 0 or image.image_height.to_s.empty? or image.image_height == 0
+      if image.image_width.to_s.empty? or image.image_width == 0 or image.image_height.to_s.empty? or image.image_height == 0
         updateImageDimensions(image, absoluteUrl)
-      # end
+      end
       logger.info "image.image_width after: #{image.image_width}"
       logger.info "image.image_height after: #{image.image_height}"
       if image.image_width and image.image_width != 0 and image.image_height and image.image_height != 0
