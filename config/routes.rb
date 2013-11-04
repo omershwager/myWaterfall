@@ -15,8 +15,8 @@ Waterfall::Application.routes.draw do
     delete "/logout" => 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  # root to: 'images#index'
-  root to: 'images#mywaterfall'
+  root to: 'images#index'
+  # root to: 'images#mywaterfall'
 
   get 'waterfallData', to: 'images#waterfallData'  
   get 'mywaterfall', to: 'images#mywaterfall'  
